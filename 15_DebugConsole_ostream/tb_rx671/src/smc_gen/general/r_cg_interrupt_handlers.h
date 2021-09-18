@@ -18,105 +18,34 @@
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
-* File Name    : r_cg_hardware_setup.c
+* File Name    : r_cg_interrupt_handlers.h
 * Version      : 1.0.2
 * Device(s)    : R5F5671EHxFP
-* Description  : Initialization file for code generation configurations.
+* Description  : This file declares interrupt handlers.
 ***********************************************************************************************************************/
 
-/***********************************************************************************************************************
-Pragma directive
-***********************************************************************************************************************/
-/* Start user code for pragma. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
+#ifndef INTERRUPT_HANDLERS_H
+#define INTERRUPT_HANDLERS_H
 
 /***********************************************************************************************************************
 Includes
 ***********************************************************************************************************************/
-#include "r_cg_macrodriver.h"
-#include "Config_PORT.h"
-#include "r_smc_cgc.h"
-#include "r_smc_interrupt.h"
-/* Start user code for include. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
-#include "r_cg_userdefine.h"
 
 /***********************************************************************************************************************
-Global variables and functions
+Macro definitions (Register bit)
 ***********************************************************************************************************************/
-/* Start user code for global. Do not edit comment generated here */
-
-/* Workaround to execute FIT Board Support Settings */
-void R_CG_Config_Create(void);
-void R_FIT_Board_Support_Settings(void);
-void R_Systeminit(void)
-{
-    R_CG_Config_Create();
-    R_FIT_Board_Support_Settings();
-}
-#define R_Systeminit R_CG_Config_Create
-
-/* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
-* Function Name: r_undefined_exception
-* Description  : This function is undefined interrupt service routine
-* Arguments    : None
-* Return Value : None
+Macro definitions
 ***********************************************************************************************************************/
-
-void r_undefined_exception(void)
-{
-    /* Start user code for r_undefined_exception. Do not edit comment generated here */
-    /* End user code. Do not edit comment generated here */
-}
 
 /***********************************************************************************************************************
-* Function Name: R_Systeminit
-* Description  : This function initializes every configuration
-* Arguments    : None
-* Return Value : None
+Typedef definitions
 ***********************************************************************************************************************/
 
-void R_Systeminit(void)
-{
-    /* Enable writing to registers related to operating modes, LPC, CGC and software reset */
-    SYSTEM.PRCR.WORD = 0xA50BU;
-
-    /* Enable writing to MPC pin function control registers */
-    MPC.PWPR.BIT.B0WI = 0U;
-    MPC.PWPR.BIT.PFSWE = 1U;
-
-    /* Write 0 to the target bits in the POECR2 registers */
-    POE3.POECR2.WORD = 0x0000U;
-
-    /* Initialize clocks settings */
-    R_CGC_Create();
-
-    /* Set peripheral settings */
-    R_Config_PORT_Create();
-
-    /* Register undefined interrupt */
-    R_BSP_InterruptWrite(BSP_INT_SRC_UNDEFINED_INTERRUPT,(bsp_int_cb_t)r_undefined_exception);
-
-    /* Disable writing to MPC pin function control registers */
-    MPC.PWPR.BIT.PFSWE = 0U;
-    MPC.PWPR.BIT.B0WI = 1U;
-
-    /* Enable protection */
-    SYSTEM.PRCR.WORD = 0xA500U;
-}
-
-/* Start user code for adding. Do not edit comment generated here */
-
-void R_FIT_Board_Support_Settings(void)
-{
-    /* Do not call any functions which enables generating any interrupt requests. */
-
-    /* The following function is just to prevent the symbol getting optimized away
-     * for e2 studio's Visual Expression View. */
-    e2_studio_visual_expression_view_helper();
-}
-
+/***********************************************************************************************************************
+Global functions
+***********************************************************************************************************************/
+/* Start user code for function. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
-
+#endif

@@ -18,105 +18,66 @@
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
-* File Name    : r_cg_hardware_setup.c
+* File Name    : r_cg_macrodriver.h
 * Version      : 1.0.2
 * Device(s)    : R5F5671EHxFP
-* Description  : Initialization file for code generation configurations.
+* Description  : Macro header file for code generation.
 ***********************************************************************************************************************/
 
-/***********************************************************************************************************************
-Pragma directive
-***********************************************************************************************************************/
-/* Start user code for pragma. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
+#ifndef MACRODRIVER_H
+#define MACRODRIVER_H
 
 /***********************************************************************************************************************
 Includes
 ***********************************************************************************************************************/
-#include "r_cg_macrodriver.h"
-#include "Config_PORT.h"
-#include "r_smc_cgc.h"
+#include "platform.h"
 #include "r_smc_interrupt.h"
-/* Start user code for include. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
-#include "r_cg_userdefine.h"
+#include "r_cg_interrupt_handlers.h"
 
 /***********************************************************************************************************************
-Global variables and functions
+Macro definitions (Register bit)
 ***********************************************************************************************************************/
-/* Start user code for global. Do not edit comment generated here */
-
-/* Workaround to execute FIT Board Support Settings */
-void R_CG_Config_Create(void);
-void R_FIT_Board_Support_Settings(void);
-void R_Systeminit(void)
-{
-    R_CG_Config_Create();
-    R_FIT_Board_Support_Settings();
-}
-#define R_Systeminit R_CG_Config_Create
-
-/* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
-* Function Name: r_undefined_exception
-* Description  : This function is undefined interrupt service routine
-* Arguments    : None
-* Return Value : None
+Macro definitions
 ***********************************************************************************************************************/
+#ifndef __TYPEDEF_CG__
 
-void r_undefined_exception(void)
-{
-    /* Start user code for r_undefined_exception. Do not edit comment generated here */
-    /* End user code. Do not edit comment generated here */
-}
+/* Status list definition */
+#define MD_STATUSBASE        (0x00U)
+#define MD_OK                (MD_STATUSBASE + 0x00U) /* register setting OK */
+#define MD_SPT               (MD_STATUSBASE + 0x01U) /* IIC stop */
+#define MD_NACK              (MD_STATUSBASE + 0x02U) /* IIC no ACK */
+#define MD_BUSY1             (MD_STATUSBASE + 0x03U) /* busy 1 */
+#define MD_BUSY2             (MD_STATUSBASE + 0x04U) /* busy 2 */
+
+/* Error list definition */
+#define MD_ERRORBASE         (0x80U)
+#define MD_ERROR             (MD_ERRORBASE + 0x00U)  /* error */
+#define MD_ARGERROR          (MD_ERRORBASE + 0x01U)  /* error argument input error */
+#define MD_ERROR1            (MD_ERRORBASE + 0x02U)  /* error 1 */
+#define MD_ERROR2            (MD_ERRORBASE + 0x03U)  /* error 2 */
+#define MD_ERROR3            (MD_ERRORBASE + 0x04U)  /* error 3 */
+#define MD_ERROR4            (MD_ERRORBASE + 0x05U)  /* error 4 */
+#define MD_ERROR5            (MD_ERRORBASE + 0x06U)  /* error 5 */
+#define nop()                R_BSP_NOP()
+#define wait()               R_BSP_WAIT()
+
+#endif
 
 /***********************************************************************************************************************
-* Function Name: R_Systeminit
-* Description  : This function initializes every configuration
-* Arguments    : None
-* Return Value : None
+Typedef definitions
 ***********************************************************************************************************************/
+#ifndef __TYPEDEF_CG__
+    typedef unsigned short      MD_STATUS;
+    #define __TYPEDEF_CG__
+#endif
 
-void R_Systeminit(void)
-{
-    /* Enable writing to registers related to operating modes, LPC, CGC and software reset */
-    SYSTEM.PRCR.WORD = 0xA50BU;
-
-    /* Enable writing to MPC pin function control registers */
-    MPC.PWPR.BIT.B0WI = 0U;
-    MPC.PWPR.BIT.PFSWE = 1U;
-
-    /* Write 0 to the target bits in the POECR2 registers */
-    POE3.POECR2.WORD = 0x0000U;
-
-    /* Initialize clocks settings */
-    R_CGC_Create();
-
-    /* Set peripheral settings */
-    R_Config_PORT_Create();
-
-    /* Register undefined interrupt */
-    R_BSP_InterruptWrite(BSP_INT_SRC_UNDEFINED_INTERRUPT,(bsp_int_cb_t)r_undefined_exception);
-
-    /* Disable writing to MPC pin function control registers */
-    MPC.PWPR.BIT.PFSWE = 0U;
-    MPC.PWPR.BIT.B0WI = 1U;
-
-    /* Enable protection */
-    SYSTEM.PRCR.WORD = 0xA500U;
-}
-
-/* Start user code for adding. Do not edit comment generated here */
-
-void R_FIT_Board_Support_Settings(void)
-{
-    /* Do not call any functions which enables generating any interrupt requests. */
-
-    /* The following function is just to prevent the symbol getting optimized away
-     * for e2 studio's Visual Expression View. */
-    e2_studio_visual_expression_view_helper();
-}
-
+/***********************************************************************************************************************
+Global functions
+***********************************************************************************************************************/
+void R_Systeminit(void);
+/* Start user code for function. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
+#endif
 

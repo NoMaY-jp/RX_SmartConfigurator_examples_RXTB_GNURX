@@ -112,7 +112,6 @@ void R_Systeminit(void)
 void R_FIT_Board_Support_Settings(void)
 {
     /* Do not call any functions which enables generating any interrupt requests. */
-    /* Do not use any static and global variables because they heve not been initialized yet. */
 
     /* The following function is just to prevent the symbol getting optimized away
      * for e2 studio's Visual Expression View. */
