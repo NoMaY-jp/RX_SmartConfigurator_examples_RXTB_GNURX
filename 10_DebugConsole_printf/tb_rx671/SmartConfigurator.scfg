@@ -530,11 +530,11 @@
         <Item currentVect="255" id="PERIA_INTA255" priority="15" usedState="Not Use"/>
     </tool>
     <tool id="Pins" version="1.0.1.0">
-        <pinItem allocation="2" comments="" direction="None" id="EMLE" isUsedBySoftware="true" locked="false" status="0"/>
         <pinItem allocation="10" comments="" direction="None" id="RES#" isUsedBySoftware="false" locked="false" status="0"/>
+        <pinItem allocation="2" comments="" direction="None" id="EMLE" isUsedBySoftware="true" locked="false" status="0"/>
+        <pinItem allocation="7" comments="" direction="None" id="FINED" isUsedBySoftware="true" locked="false" status="0"/>
         <pinItem allocation="18" comments="" direction="O" id="P32" isUsedBySoftware="true" locked="false" status="0"/>
         <pinItem allocation="17" comments="" direction="O" id="P33" isUsedBySoftware="true" locked="false" status="0"/>
-        <pinItem allocation="7" comments="" direction="None" id="FINED" isUsedBySoftware="true" locked="false" status="0"/>
     </tool>
     <tool id="Summary" version="1.0.0.0">
         <option id="com.renesas.smc.code.path" value="src\smc_gen"/>
